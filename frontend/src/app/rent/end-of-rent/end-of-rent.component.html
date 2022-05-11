@@ -1,0 +1,91 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="vechileType">Felhasználó Id</label>
+          <select (ngModelChange)="fillVechileId()" class="form-select" id="statusType" [formControl]="userIdValue">
+            <option *ngFor="let type of userIdList " [ngValue]="type">{{type}} </option>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label for="vechileId">Jármű Id</label>
+          <select class="form-select" id="vechileId" [formControl]="vechileValues">
+            <option *ngFor="let type of vechileIdList " [ngValue]="type">{{type}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="days">Foglalt napok</label>
+          <input type="number" formControlName="days" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for=kilometers>Megtett kilométerek</label>
+          <input type="number" formControlName="kilometers" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="isBroken">Sérült</label>
+          <select class="form-select" id="type" [formControl]="isBroken">
+            <option *ngFor="let type of brokenProperty | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+          </select>
+        </div>
+
+        <button class="btn btn-success btn-lg btn-block" type="submit">
+          Kölcsönzés
+        </button>
+
+
+      </form>
+      <div *ngIf="submitted.valueOf() == true ">
+        <p>{{getVechile().id}}</p>
+
+      </div>
+      <h5>Kölcsönvett Járművek:</h5>
+      <div *ngFor="let type of vechileIdList">
+        <table class="table-bordered" [width]="500">
+          <tr>
+            <td>{{type}}</td>
+          </tr>
+        </table>
+
+
+      </div>
+
+
+      <table *ngIf="submitted" class="table">
+        <thead>
+        <tr>
+          <th>Számla</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Foglalt napok díja:</td>
+          <td>{{days.value * getVechile().price}}-Ft</td>
+        </tr>
+        <tr>
+          <td>Futott kilométer díj:</td>
+          <td>{{kilometers.value * 10}}-Ft</td>
+        </tr>
+        <tr *ngIf="(isBroken.value === 'Yes')">
+          <td>Törés díj:</td>
+          <td>30.000-Ft</td>
+        </tr>
+        <tr>
+          <td>Végösszeg:</td>
+          <td *ngIf="(isBroken.value === 'Yes')">{{(days.value * getVechile().price) + kilometers.value * 10 + 30000}}
+            -Ft
+          </td>
+          <td *ngIf="(isBroken.value === 'No')">{{(days.value * getVechile().price) + kilometers.value * 10}}-Ft</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

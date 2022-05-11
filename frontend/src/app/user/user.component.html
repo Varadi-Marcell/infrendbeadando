@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="sidebar">
+        <div class="widget">
+          <div class="widget-content">
+            <div class="custom-control custom-checkbox ">
+              <a [routerLink]="'/userAdd'">
+                <button type="button" class="btn btn-success" aria-label="Left Align" >
+                  Hozzáadás
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="widget border-0">
+          <div class="widget-add">
+            <img class="img-fluid" src="images/add-banner.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Keresés"
+        [(ngModel)]="filterTerm"
+      />
+      <div class="row">
+        <mat-grid-list cols="3" rowHeight="3:5">
+          <mat-grid-tile *ngFor="let user of users | filter:filterTerm; let i = index">
+            <div class="card" style="width: 18rem;">
+              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{user.firstName}} {{user.lastName}}</h5>
+                <p class="card-text">ID: {{user.id}}</p>
+                <p class="card-text">Age: {{user.age}}</p>
+                <p class="card-text">Email: {{user.email}}</p>
+
+                <a [routerLink]="'/user/' + user.id" class="btn btn-success">Megnézem</a>
+                <a [routerLink]="'/user-update/' + user.id" class="btn btn-primary">Update</a>
+                <a class="btn btn-danger" (click)="delete(user.id)" >Törlés</a>
+
+              </div>
+            </div>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </div>
+
+    </div>
+  </div>
+</div>

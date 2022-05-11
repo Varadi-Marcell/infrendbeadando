@@ -1,0 +1,97 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="vechileForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="platenumber">Platenumber</label>
+          <input class="form-control" type="text"  formControlName="platenumber" />
+          <div class="text-danger" *ngIf="checker['platenumber'].invalid && (checker['platenumber'].dirty || checker['platenumber'].touched)">
+            <small *ngIf="checker['platenumber'].errors">A rendszám formátuma nem megfelelő</small>
+          </div>
+        <div >
+
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label for="chassisnumber">Chassisnumber</label>
+          <input class="form-control" type="text" formControlName="chassisnumber" />
+          <!-- error -->
+
+        </div>
+
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input class="form-control" type="date" formControlName="date" />
+          <!-- error -->
+
+        </div>
+
+        <div class="form-group">
+          <label for="Name">Name</label>
+          <input class="form-control" type="text" formControlName="name" />
+          <!-- error -->
+          <div class="text-danger" *ngIf="checker['name'].invalid && (checker['name'].dirty || checker['name'].touched)">
+            <small *ngIf="checker['name'].errors">A név nem hagyható üresen.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="brand">Brand</label>
+          <input class="form-control" type="text" formControlName="brand" />
+          <!-- error -->
+
+        </div>
+
+        <div class="form-group">
+          <label for="price">price</label>
+          <input class="form-control" type="number" formControlName="price" />
+          <!-- error -->
+
+        </div>
+
+        <div class="form-group">
+          <label for="kilometers">kilometers</label>
+          <input class="form-control" type="number" formControlName="kilometers" />
+          <!-- error -->
+
+
+
+        </div>
+
+        <div class="form-group">
+          <label for="vechileType">Choose type</label>
+          <select class="form-select" id="type" [formControl]="vechileType">
+            <option [ngValue]="null">Select one...</option>
+            <option *ngFor="let type of typeProperty | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="vechileType">Choose fuel</label>
+          <select class="form-select" id="propertyType" [formControl]="vechileFuel">
+            <option [ngValue]="null">Select one...</option>
+            <option *ngFor="let type of fuelProperty | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+        <label for="vechileType">Status</label>
+        <select class="form-select" id="statusType" [formControl]="vechileStatus">
+          <option [ngValue]="null">Select one...</option>
+          <option *ngFor="let type of statusProperty | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+        </select>
+      </div>
+
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block" type="submit">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- form card register -->
+</div>

@@ -1,0 +1,117 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="sidebar">
+        <br>
+        <div class="widget">
+          <div class="widget-title widget-collapse">
+            <h6>Márkák</h6>
+          </div>
+          <div class="collapse show" id="dateposted">
+            <div class="widget-content">
+              <form [formGroup]="form" (ngSubmit)="filterBrands()">
+                <div class="custom-control custom-checkbox" *ngFor="let brands of list; let i = index">
+                  <mat-checkbox formControlName="brand" class="custom-checkbox" [checked]="selected === i" (change)="selected = i">{{brands}}</mat-checkbox>
+                </div>
+
+                <div class="form-group">
+                  <button  class="btn btn-success" type="submit">
+                    Szűrés
+                  </button>
+                </div>
+              </form>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="widget">
+          <div class="collapse show" id="specialism">
+            <div class="widget-content">
+              <div class="custom-control custom-checkbox ">
+                <a [routerLink]="'/addVechiles'">
+                <button type="button" class="btn btn-success" aria-label="Left Align" >
+                  Hozzáadás
+                </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-title widget-collapse">
+            <h6>Szűrés</h6>
+          </div>
+          <div class="collapse show" id="jobtype">
+            <div class="widget-content">
+
+              <form [formGroup]="form" (ngSubmit)="search()">
+                <input formControlName="platenumber"
+                       type="text"
+                       class="form-control"
+                       placeholder="Rendszám keresése"
+                />
+                <div class="form-group">
+                  <button  class="btn btn-success" type="submit">
+                    Keresés
+                  </button>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <br>
+      <div class="row">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Keresés"
+          [(ngModel)]="filterTerm"
+        />
+        <mat-grid-list cols="3" rowHeight="3:5" >
+          <mat-grid-tile *ngFor="let vechile of vechiles | filter: filterTerm; let i = index">
+            <div class="card" style="width: 18rem;" >
+              <img src="https://i.pinimg.com/originals/0b/eb/cc/0bebcc7980a5e2d3f913f2014f8db699.png" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{vechile.brand}} {{vechile.name}}</h5>
+                <p class="card-text">ID: {{vechile.id}}</p>
+                <p class="card-text">Típus {{vechile.type}}</p>
+
+                <p class="card-text">Rendszám {{vechile.platenumber}}</p>
+
+                <p class="card-text">Kilóméter: {{vechile.kilometers}} km</p>
+
+                <a [routerLink]="'/vechile/' + vechile.id" class="btn btn-success">Megnézem</a>
+                <a [routerLink]="'/vechile-update/' + vechile.id" class="btn btn-primary">Update</a>
+                <a class="btn btn-danger" (click)="delete(vechile.id)" routerLink="vechiles">Törlés</a>
+
+                <div *ngIf="vechile.status === 'Yes'" class="alert alert-success box-msg" role="alert">
+                  <strong>Elérhető</strong>
+                </div>
+
+                <div *ngIf="vechile.status === 'No'" class="alert alert-warning box-msg" role="alert">
+                  <strong>Jelenleg Foglalva</strong>
+                </div>
+
+                <div *ngIf="vechile.status === 'Outofservice'" class="alert alert-danger box-msg" role="alert">
+                  <strong>Szervízelés Alatt</strong>
+                </div>
+
+              </div>
+            </div>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </div>
+    </div>
+  </div>
+</div>

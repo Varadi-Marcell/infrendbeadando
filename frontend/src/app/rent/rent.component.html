@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="vechileType">Felhasználó Id</label>
+          <select class="form-select" id="userIdValue" [formControl]="userIdValue">
+            <option [ngValue]="null">Válassz ID-t</option>
+            <option *ngFor="let type of userIdList " [ngValue]="type">{{type}}</option>
+
+          </select>
+
+        </div>
+
+        <form [formGroup]="userForm">
+          <div class="table table-bordered" formArrayName="quantities">
+            <th colspan="2">Mennyiség megadása:</th>
+            <button novalidate [hidden]="quantities().length >= 1" (click)="addQuantity()" class="btn btn-primary">
+              Hozzáadás
+            </button>
+            <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+              JárműId :
+              <input type="number" formControlName="qty" class="form-control">
+              <button (click)="removeQuantity(i)" class="btn btn-danger">Törlés</button>
+              <button novalidate [hidden]="getUserPermission() === 'Admin'" (click)="addQuantity()"
+                      class="btn btn-primary"> Hozzáadás
+              </button>
+
+            </div>
+          </div>
+        </form>
+        <button class="btn btn-success btn-lg btn-block" type="submit">
+          Kölcsönzés
+        </button>
+
+
+      </form>
+      <h5>Elérhető Járművek:</h5>
+      <div *ngFor="let type of vechileIdList">
+        <table class="table-bordered" [width]="500">
+          <tr>
+            <td>{{type}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
